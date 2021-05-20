@@ -30,18 +30,18 @@ function _uniqContentEquals(aIterator, bIterator, stackA, stackB) {
     return !_includesWith(eq, aItem, b);
   }, b, a);
 }
-
+//会对map和set进行深比较
 export default function _equals(a, b, stackA, stackB) {
-  if (_objectIs(a, b)) {
+  if (_objectIs(a, b)) { //简单判断，如果相同直接通过
     return true;
   }
-
+  // 获取类型
   var typeA = type(a);
-
+  //两个数据的类型就不相同，直接就认为不是同一种数据
   if (typeA !== type(b)) {
     return false;
   }
-
+  //双方都有equals函数，那么就进行双判断
   if (typeof a['fantasy-land/equals'] === 'function' || typeof b['fantasy-land/equals'] === 'function') {
     return typeof a['fantasy-land/equals'] === 'function' && a['fantasy-land/equals'](b) &&
       typeof b['fantasy-land/equals'] === 'function' && b['fantasy-land/equals'](a);
